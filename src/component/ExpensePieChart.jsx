@@ -6,12 +6,10 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-
-const data = [
-  { name: "Food", value: 400 },
-  { name: "Entertainment", value: 300 },
-  { name: "Travel", value: 300 },
-];
+import "../App.css";
+import React, { useMemo } from "react";
+import { useExpenseContext } from "../contextApi/ContextProvider";
+import { graphData } from "../helper/helper";
 
 const COLORS = ["#A000FF", "#FDE006", "#FF9304"];
 
@@ -23,7 +21,6 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -43,6 +40,8 @@ const renderCustomizedLabel = ({
 };
 
 export default function ExpensePieChart() {
+  const { expenses, expenseBalance } = useExpenseContext();
+  const data = useMemo(() => graphData(expenses), [expenses, expenseBalance]);
   return (
     <div className="pieChart">
       <ResponsiveContainer>
@@ -53,7 +52,7 @@ export default function ExpensePieChart() {
             label={renderCustomizedLabel}
             outerRadius={110}
             fill="#8884d8"
-            dataKey="value"
+            dataKey="total"
           >
             {data.map((entry, index) => (
               <Cell

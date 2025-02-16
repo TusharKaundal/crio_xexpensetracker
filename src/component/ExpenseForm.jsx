@@ -1,3 +1,4 @@
+import React from "react";
 import ExpenseBarChart from "./ExpenseBarChart";
 import ExpenseTransitionList from "./ExpenseTransitionList";
 

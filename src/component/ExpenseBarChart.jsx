@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -8,28 +8,16 @@ import {
   Tooltip,
   Rectangle,
 } from "recharts";
-const data = [
-  {
-    name: "Entertainment",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Food",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Travel",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-];
+import { useExpenseContext } from "../contextApi/ContextProvider";
+import { graphData } from "../helper/helper";
 
 const ExpenseBarChart = () => {
+  const { expenses, expenseBalance } = useExpenseContext();
+  const data = useMemo(
+    () => graphData(expenses).sort((a, b) => b.total - a.total),
+    [expenses, expenseBalance]
+  );
+
   return (
     <div className="transaction_barchart_main">
       <h1>Top Expenses</h1>
@@ -56,7 +44,7 @@ const ExpenseBarChart = () => {
             />
             <Tooltip wrapperStyle={{ backgroundColor: "none" }} />
             <Bar
-              dataKey="pv"
+              dataKey="total"
               fill="#8884d8"
               radius={[0, 40, 40, 0]}
               barSize={20}

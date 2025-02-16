@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import clsx from "clsx";
-const WalletCards = ({ value, placeholder }) => {
+import React from "react";
+const WalletCards = ({ value, placeholder, handleModal }) => {
   return (
     <div className="wallet_cards">
       <h1
@@ -15,6 +17,7 @@ const WalletCards = ({ value, placeholder }) => {
           wallet_btn: placeholder === "Wallet",
           expense_btn: placeholder === "Expense",
         })}
+        onClick={() => handleModal(true)}
       >
         + Add {placeholder}
       </button>
@@ -22,4 +25,4 @@ const WalletCards = ({ value, placeholder }) => {
   );
 };
 
-export default WalletCards;
+export default React.memo(WalletCards);
