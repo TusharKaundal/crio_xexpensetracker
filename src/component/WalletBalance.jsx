@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useExpenseContext } from "../contextApi/ContextProvider";
 import { initialState, validateInput } from "../helper/helper";
@@ -47,7 +46,15 @@ const WalletBlance = () => {
       enqueueSnackbar(message, { variant: "error" });
     }
   }
+  function handleExpenseCancel() {
+    setExpenseModal(false);
+    setExpenseData(initialState);
+  }
 
+  function handleWalletCancel() {
+    setWalletModal(false);
+    setWalletAmount("");
+  }
   return (
     <div>
       <h1>Expense Tracker</h1>
@@ -86,7 +93,7 @@ const WalletBlance = () => {
             </button>
             <button
               type="reset"
-              onClick={() => setWalletModal(false)}
+              onClick={handleWalletCancel}
               name="cancel"
               value="wallet"
             >
@@ -150,11 +157,7 @@ const WalletBlance = () => {
             <button type="submit" onClick={handleExpenseSubmit}>
               Add Expense
             </button>
-            <button
-              type="reset"
-              onClick={() => setExpenseModal(false)}
-              name="cancel"
-            >
+            <button type="reset" onClick={handleExpenseCancel} name="cancel">
               Cancel
             </button>
           </div>
